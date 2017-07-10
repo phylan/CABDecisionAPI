@@ -1,5 +1,5 @@
 from flask import Flask, jsonify, request, make_response, abort
-from config import MONGO_URI, DB_NAME, COLL_NAME
+from config import MONGO_URI, MONGO_PORT, DB_NAME, COLL_NAME
 import pymongo
 
 app = Flask(__name__)
