@@ -1,4 +1,4 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request, make_response, abort
 from config import MONGO_URI, DB_NAME, COLL_NAME
 import pymongo
 
@@ -8,7 +8,7 @@ client = pymongo.MongoClient(MONGO_URI)
 db = client.get_database(DB_NAME)
 coll = db.get_collection(COLL_NAME)
 
-@app.route('/CAB/api/v1.0/decisions/', methods=['GET'])
+@app.route('/CAB/api/v1.0/decisions', methods=['GET'])
 def getAll():
 	
 	cur = coll.find({},{'_id':0})
@@ -24,6 +24,24 @@ def search(queryString):
 	count = len(results)
 	return jsonify({'count':count, 'results':results})
 	
+@app.route('/CAB/api/v1.0/decisions', methods=['POST'])
+def addDecision():
+	
+	try:
+		newDecision = request.get_json()
+	except:
+		abort(400)
+	
+	if newDecision == None:
+		abort(400)
+	
+	try:
+		coll.insert_one(newDecision)
+		return jsonify({'decision' : newDecision}), 201	
+		
+	except:
+		abort(400)
+
 @app.errorhandler(404)
 def not_found(error):
 	
