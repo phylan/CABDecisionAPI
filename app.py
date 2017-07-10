@@ -1,8 +1,10 @@
 from flask import Flask, jsonify, request, make_response, abort
+from flask_cors import CORS
 from config import MONGO_URI, MONGO_PORT, DB_NAME, COLL_NAME
 import pymongo
 
 app = Flask(__name__)
+CORS(app)
 
 client = pymongo.MongoClient(MONGO_URI, int(MONGO_PORT))
 db = client.get_database(DB_NAME)
