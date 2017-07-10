@@ -8,7 +8,7 @@ client = pymongo.MongoClient(MONGO_URI, int(MONGO_PORT))
 db = client.get_database(DB_NAME)
 coll = db.get_collection(COLL_NAME)
 
-@app.route('/CAB/api/v1.0/decisions', methods=['GET'])
+@app.route('/api/v1.0/decisions', methods=['GET'])
 def getAll():
 	
 	cur = coll.find({},{'_id':0})
@@ -16,7 +16,7 @@ def getAll():
 	count = len(results)
 	return jsonify({'count':count, 'results':results})
 	
-@app.route('/CAB/api/v1.0/search/<queryString>', methods=['GET'])
+@app.route('/api/v1.0/search/<queryString>', methods=['GET'])
 def search(queryString):
 	
 	cur = coll.find({"$text" : {"$search" : queryString }}, {'_id':0})
@@ -24,7 +24,7 @@ def search(queryString):
 	count = len(results)
 	return jsonify({'count':count, 'results':results})
 	
-@app.route('/CAB/api/v1.0/decisions', methods=['POST'])
+@app.route('/api/v1.0/decisions', methods=['POST'])
 def addDecision():
 	
 	try:
