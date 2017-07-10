@@ -4,7 +4,7 @@ import pymongo
 
 app = Flask(__name__)
 
-client = pymongo.MongoClient(MONGO_URI)
+client = pymongo.MongoClient(MONGO_URI, int(MONGO_PORT))
 db = client.get_database(DB_NAME)
 coll = db.get_collection(COLL_NAME)
 
