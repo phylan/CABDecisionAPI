@@ -1,7 +1,7 @@
 from flask import Flask, jsonify, request, make_response, abort
 from flask_cors import CORS
 from config import MONGO_URI, MONGO_PORT, DB_NAME, COLL_NAME
-import pymongo
+import pymongo, strings
 
 app = Flask(__name__)
 CORS(app)
@@ -23,6 +23,10 @@ def search(queryString):
 	
 	cur = coll.find({"$text" : {"$search" : queryString }}, {'_id':0})
 	results = list(cur)
+	
+	for result in results:
+		result['excerpts'] = strings.getExcerpts(result.pop('body'), queryString)
+	
 	count = len(results)
 	return jsonify({'count':count, 'results':results})
 	
