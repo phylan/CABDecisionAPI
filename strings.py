@@ -1,5 +1,7 @@
 def findAll(inString, searchString):
 	
+	searchString = searchString.replace("\"","")
+	
 	start = 0
 	while True:
 		start = inString.find(searchString, start)
