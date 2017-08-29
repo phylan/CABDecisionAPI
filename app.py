@@ -1,12 +1,18 @@
 from flask import Flask, jsonify, request, make_response, abort
 from flask_cors import CORS
-from config import MONGO_URI, MONGO_PORT, DB_NAME, COLL_NAME
+from config import MONGO_URI, MONGO_PORT, DB_NAME, COLL_NAME, USER, PASSWORD
+from urllib import parse
 import pymongo, strings
+
 
 app = Flask(__name__)
 CORS(app)
 
-client = pymongo.MongoClient(MONGO_URI, int(MONGO_PORT))
+user = urllib.parse.quote_plus(USER)
+password = urllib.parse.quote_plus(PASSWORD)
+uri = "mongodb://{0}:{1}@{3}".format(user, password, MONGO_URI)
+
+client = pymongo.MongoClient(uri)
 db = client.get_database(DB_NAME)
 coll = db.get_collection(COLL_NAME)
 
