@@ -1,8 +1,7 @@
 from flask import Flask, jsonify, request, make_response, abort
 from flask_cors import CORS
 from config import MONGO_URI, MONGO_PORT, DB_NAME, COLL_NAME, USER, PASSWORD
-from urllib import parse
-import pymongo, strings
+import pymongo, strings, urllib
 
 
 app = Flask(__name__)
