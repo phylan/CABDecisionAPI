@@ -9,7 +9,7 @@ CORS(app)
 
 user = urllib.parse.quote_plus(USER)
 password = urllib.parse.quote_plus(PASSWORD)
-uri = "mongodb://{0}:{1}@{3}".format(user, password, MONGO_URI)
+uri = "mongodb://{0}:{1}@{2}".format(user, password, MONGO_URI)
 
 client = pymongo.MongoClient(uri)
 db = client.get_database(DB_NAME)
